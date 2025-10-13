@@ -1,0 +1,2 @@
+../source/tasks/task_imu.c:13:6:TaskIMU_Init	16	static
+../source/tasks/task_imu.c:17:6:TaskIMU	16	static

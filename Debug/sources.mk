@@ -33,6 +33,9 @@ freertos/freertos_kernel \
 freertos/freertos_kernel/portable/GCC/ARM_CM4F \
 freertos/freertos_kernel/portable/MemMang \
 source \
+source/drivers \
+source/shared \
+source/tasks \
 startup \
 utilities \
 
