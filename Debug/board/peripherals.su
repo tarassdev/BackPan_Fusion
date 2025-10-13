@@ -1,0 +1,15 @@
+C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\CMSIS/core_cm7.h:1902:22:__NVIC_EnableIRQ	16	static
+C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\CMSIS/core_cm7.h:2032:22:__NVIC_SetPriority	16	static
+C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\drivers/fsl_common.h:484:28:EnableIRQ	16	static
+C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\drivers/fsl_pit.h:159:20:PIT_EnableInterrupts	24	static
+C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\drivers/fsl_pit.h:246:20:PIT_SetTimerPeriod	24	static
+C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\drivers/fsl_pit.h:286:20:PIT_StartTimer	16	static
+../board/peripherals.c:215:13:CAN0_init	8	static
+../board/peripherals.c:353:13:CAN1_init	8	static
+../board/peripherals.c:401:13:PIT_init	8	static
+../board/peripherals.c:461:13:UART0_init	8	static
+../board/peripherals.c:513:13:UART2_init	8	static
+../board/peripherals.c:565:13:UART4_init	8	static
+../board/peripherals.c:613:13:DebugConsole_init	8	static
+../board/peripherals.c:621:6:BOARD_InitPeripherals	8	static
+../board/peripherals.c:636:6:BOARD_InitBootPeripherals	8	static
