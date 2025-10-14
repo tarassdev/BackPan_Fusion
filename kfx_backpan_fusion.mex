@@ -411,22 +411,23 @@
                            <struct name="5"/>
                            <struct name="6"/>
                            <struct name="7"/>
+                           <struct name="8"/>
                         </array>
                         <array name="interrupts"/>
                      </config_set>
                   </instance>
                   <instance name="CAN0" uuid="ebdea34a-de9f-4777-b7be-5a6ce1addb37" type="flexcan" type_id="flexcan_477f6be3462ee2961b67c0825ef495e2" mode="interrupts" peripheral="CAN0" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
                      <config_set name="interruptsCfg">
-                        <setting name="messageBufferIrqs" value="0"/>
+                        <setting name="messageBufferIrqs" value="15"/>
                         <set name="interruptsEnable">
                            <selected/>
                         </set>
-                        <setting name="enable_ored_mb_irq" value="false"/>
+                        <setting name="enable_ored_mb_irq" value="true"/>
                         <struct name="interrupt_ored_mb">
                            <setting name="IRQn" value="CAN0_ORed_Message_buffer_IRQn"/>
                            <setting name="enable_interrrupt" value="enabled"/>
-                           <setting name="enable_priority" value="false"/>
-                           <setting name="priority" value="0"/>
+                           <setting name="enable_priority" value="true"/>
+                           <setting name="priority" value="3"/>
                            <setting name="enable_custom_name" value="false"/>
                         </struct>
                         <setting name="enable_busoff_irq" value="false"/>
@@ -504,14 +505,32 @@
                               <setting name="mbID" value="0"/>
                               <setting name="mbType" value="mbRx"/>
                               <struct name="rxMb">
-                                 <setting name="id" value="0"/>
+                                 <setting name="id" value="0x32"/>
                                  <setting name="format" value="kFLEXCAN_FrameFormatStandard"/>
                                  <setting name="type" value="kFLEXCAN_FrameTypeData"/>
                               </struct>
                            </struct>
                            <struct name="1">
                               <setting name="mbID" value="1"/>
-                              <setting name="mbType" value="mbTx"/>
+                              <setting name="mbType" value="mbRx"/>
+                              <struct name="rxMb">
+                                 <setting name="id" value="0x34"/>
+                                 <setting name="format" value="kFLEXCAN_FrameFormatStandard"/>
+                                 <setting name="type" value="kFLEXCAN_FrameTypeData"/>
+                              </struct>
+                           </struct>
+                           <struct name="2">
+                              <setting name="mbID" value="2"/>
+                              <setting name="mbType" value="mbRx"/>
+                              <struct name="rxMb">
+                                 <setting name="id" value="0x41"/>
+                                 <setting name="format" value="kFLEXCAN_FrameFormatStandard"/>
+                                 <setting name="type" value="kFLEXCAN_FrameTypeData"/>
+                              </struct>
+                           </struct>
+                           <struct name="3">
+                              <setting name="mbID" value="3"/>
+                              <setting name="mbType" value="mbRx"/>
                               <struct name="rxMb">
                                  <setting name="id" value="0"/>
                                  <setting name="format" value="kFLEXCAN_FrameFormatStandard"/>

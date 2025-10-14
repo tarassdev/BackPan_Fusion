@@ -11,11 +11,12 @@
 #pragma once
 #include "FreeRTOS.h"
 #include "semphr.h"
+#include "FusionMath.h"
 
 typedef struct {
-	float accel[3];
-	float gyro[3];
-	float mag[3];
+	FusionVector gyro;
+	FusionVector acc;
+	FusionVector mag;
 	TickType_t timestamp;
 } ImuSample_t;
 

@@ -7,5 +7,5 @@
 
 #include "shared_data.h"
 
-ImuSample_t gImuData;
-FusionOutput_t gFusionData;
+ImuSample_t gImuData = {0};
+FusionOutput_t gFusionData = {0};

@@ -76,6 +76,7 @@ instance:
       - 5: []
       - 6: []
       - 7: []
+      - 8: []
     - interrupts: []
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
@@ -99,14 +100,14 @@ instance:
 - peripheral: 'CAN0'
 - config_sets:
   - interruptsCfg:
-    - messageBufferIrqs: '0'
+    - messageBufferIrqs: '15'
     - interruptsEnable: ''
-    - enable_ored_mb_irq: 'false'
+    - enable_ored_mb_irq: 'true'
     - interrupt_ored_mb:
       - IRQn: 'CAN0_ORed_Message_buffer_IRQn'
       - enable_interrrupt: 'enabled'
-      - enable_priority: 'false'
-      - priority: '0'
+      - enable_priority: 'true'
+      - priority: '3'
       - enable_custom_name: 'false'
     - enable_busoff_irq: 'false'
     - interrupt_busoff:
@@ -174,12 +175,26 @@ instance:
         - mbID: '0'
         - mbType: 'mbRx'
         - rxMb:
-          - id: '0'
+          - id: '0x32'
           - format: 'kFLEXCAN_FrameFormatStandard'
           - type: 'kFLEXCAN_FrameTypeData'
       - 1:
         - mbID: '1'
-        - mbType: 'mbTx'
+        - mbType: 'mbRx'
+        - rxMb:
+          - id: '0x34'
+          - format: 'kFLEXCAN_FrameFormatStandard'
+          - type: 'kFLEXCAN_FrameTypeData'
+      - 2:
+        - mbID: '2'
+        - mbType: 'mbRx'
+        - rxMb:
+          - id: '0x41'
+          - format: 'kFLEXCAN_FrameFormatStandard'
+          - type: 'kFLEXCAN_FrameTypeData'
+      - 3:
+        - mbID: '3'
+        - mbType: 'mbRx'
         - rxMb:
           - id: '0'
           - format: 'kFLEXCAN_FrameFormatStandard'
@@ -208,6 +223,24 @@ const flexcan_config_t CAN0_config = {
 };
 /* Message buffer 0 configuration structure */
 const flexcan_rx_mb_config_t CAN0_rx_mb_config_0 = {
+  .id = FLEXCAN_ID_STD(50UL),
+  .format = kFLEXCAN_FrameFormatStandard,
+  .type = kFLEXCAN_FrameTypeData
+};
+/* Message buffer 1 configuration structure */
+const flexcan_rx_mb_config_t CAN0_rx_mb_config_1 = {
+  .id = FLEXCAN_ID_STD(52UL),
+  .format = kFLEXCAN_FrameFormatStandard,
+  .type = kFLEXCAN_FrameTypeData
+};
+/* Message buffer 2 configuration structure */
+const flexcan_rx_mb_config_t CAN0_rx_mb_config_2 = {
+  .id = FLEXCAN_ID_STD(65UL),
+  .format = kFLEXCAN_FrameFormatStandard,
+  .type = kFLEXCAN_FrameTypeData
+};
+/* Message buffer 3 configuration structure */
+const flexcan_rx_mb_config_t CAN0_rx_mb_config_3 = {
   .id = FLEXCAN_ID_STD(0UL),
   .format = kFLEXCAN_FrameFormatStandard,
   .type = kFLEXCAN_FrameTypeData
@@ -219,7 +252,21 @@ static void CAN0_init(void) {
   /* Message buffer 0 initialization */
   FLEXCAN_SetRxMbConfig(CAN0_PERIPHERAL, 0, &CAN0_rx_mb_config_0, true);
   /* Message buffer 1 initialization */
-  FLEXCAN_SetTxMbConfig(CAN0_PERIPHERAL, 1, true);
+  FLEXCAN_SetRxMbConfig(CAN0_PERIPHERAL, 1, &CAN0_rx_mb_config_1, true);
+  /* Message buffer 2 initialization */
+  FLEXCAN_SetRxMbConfig(CAN0_PERIPHERAL, 2, &CAN0_rx_mb_config_2, true);
+  /* Message buffer 3 initialization */
+  FLEXCAN_SetRxMbConfig(CAN0_PERIPHERAL, 3, &CAN0_rx_mb_config_3, true);
+  /* Enable FlexCAN interrupts of message buffers */
+  FLEXCAN_EnableMbInterrupts(CAN0_PERIPHERAL, 15UL);
+  /* Interrupt vector CAN0_ORed_Message_buffer_IRQn priority settings in the NVIC. */
+  NVIC_SetPriority(CAN0_CAN_ORED_MB_IRQN, CAN0_CAN_ORED_MB_IRQ_PRIORITY);
+  /* Enable interrupt CAN0_ORed_Message_buffer_IRQn request in the NVIC. */
+  EnableIRQ(CAN0_CAN_ORED_MB_IRQN);
+  /* Interrupt vector CAN0_ORed_Message_buffer_IRQn priority settings in the NVIC. */
+  NVIC_SetPriority(CAN0_CAN_ORED_MB_IRQN, CAN0_CAN_ORED_MB_IRQ_PRIORITY);
+  /* Enable interrupt CAN0_ORed_Message_buffer_IRQn request in the NVIC. */
+  EnableIRQ(CAN0_CAN_ORED_MB_IRQN);
 }
 
 /***********************************************************************************************************************

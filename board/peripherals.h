@@ -31,6 +31,12 @@ extern "C" {
 #define CAN0_PERIPHERAL CAN0
 /* Definition of the clock source frequency */
 #define CAN0_CLOCK_SOURCE 120000000UL
+/* CAN0 interrupt vector ID (number). */
+#define CAN0_CAN_ORED_MB_IRQN CAN0_ORed_Message_buffer_IRQn
+/* CAN0 interrupt vector priority. */
+#define CAN0_CAN_ORED_MB_IRQ_PRIORITY 3
+/* CAN0 interrupt handler identifier. */
+#define CAN0_CAN_ORED_MB_IRQHANDLER CAN0_ORed_Message_buffer_IRQHandler
 /* Definition of peripheral ID */
 #define CAN1_PERIPHERAL CAN1
 /* Definition of the clock source frequency */
@@ -113,6 +119,12 @@ extern "C" {
 extern const flexcan_config_t CAN0_config;
 /* Message buffer 0 configuration structure */
 extern const flexcan_rx_mb_config_t CAN0_rx_mb_config_0;
+/* Message buffer 1 configuration structure */
+extern const flexcan_rx_mb_config_t CAN0_rx_mb_config_1;
+/* Message buffer 2 configuration structure */
+extern const flexcan_rx_mb_config_t CAN0_rx_mb_config_2;
+/* Message buffer 3 configuration structure */
+extern const flexcan_rx_mb_config_t CAN0_rx_mb_config_3;
 extern flexcan_rx_fifo_config_t CAN0_rx_fifo_config;
 extern const flexcan_config_t CAN1_config;
 /* Message buffer 0 configuration structure */
