@@ -10,10 +10,13 @@
 SemaphoreHandle_t xImuDataReady;
 SemaphoreHandle_t xFusionDone;
 SemaphoreHandle_t xSharedDataMutex;
+QueueHandle_t can0RxQueue = NULL;
 
 void Semaphores_Init(void)
 {
 	xImuDataReady = xSemaphoreCreateBinary();
 	xFusionDone = xSemaphoreCreateBinary();
 	xSharedDataMutex = xSemaphoreCreateMutex();
+	/* queue element size should fit CAN msg (id + up to 8 bytes) */
+	can0RxQueue = xQueueCreate(32, sizeof(uint64_t) /* or a struct for id+len+data */);
 }

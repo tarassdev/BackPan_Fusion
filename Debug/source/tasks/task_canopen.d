@@ -14,7 +14,9 @@ source/tasks/task_canopen.o source/tasks/task_canopen.d: \
  C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\freertos\freertos_kernel\include/task.h \
  C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\source/drivers/flexcan1_drv.h \
  C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\source/shared/shared_data.h \
- C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\source/shared/semaphores.h
+ C:/Users/Lenovo/Documents/MCUXpressoIDE_25.6.136/workspace/kfx_backpan_fusion/source/fusion/FusionMath.h \
+ C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\source/shared/semaphores.h \
+ C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\freertos\freertos_kernel\include/queue.h
 ../source/tasks/task_canopen.h:
 C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\freertos\freertos_kernel\include/FreeRTOS.h:
 C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\source/FreeRTOSConfig.h:
@@ -30,4 +32,6 @@ C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\fr
 C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\freertos\freertos_kernel\include/task.h:
 C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\source/drivers/flexcan1_drv.h:
 C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\source/shared/shared_data.h:
+C:/Users/Lenovo/Documents/MCUXpressoIDE_25.6.136/workspace/kfx_backpan_fusion/source/fusion/FusionMath.h:
 C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\source/shared/semaphores.h:
+C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\freertos\freertos_kernel\include/queue.h:

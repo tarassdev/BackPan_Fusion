@@ -17,4 +17,6 @@
 void TaskFusion_Init(void);
 void TaskFusion(void *pvParameters);
 
+extern TaskHandle_t fusionTaskHandle;
+
 #endif /* TASKS_TASK_FUSION_H_ */

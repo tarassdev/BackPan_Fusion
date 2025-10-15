@@ -12,11 +12,15 @@
 #include "drivers/flexcan1_drv.h"
 //#include "fusion/Fusion.h"
 
+TaskHandle_t fusionTaskHandle = NULL;
+
+#define FUSION_STACK_SIZE  (1024)
+#define FUSION_PRIORITY    (configMAX_PRIORITIES - 3)
+#define FUSION_DT_SECONDS  (0.005f)
 
 
 void TaskFusion_Init(void) {
-
-    xTaskCreate(TaskFusion, "Fusion_Task", 1024, NULL, tskIDLE_PRIORITY + 4, NULL);
+    xTaskCreate(TaskFusion, "Fusion_Task", FUSION_STACK_SIZE, NULL, FUSION_PRIORITY, NULL);
 }
 
 /**

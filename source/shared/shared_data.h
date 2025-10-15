@@ -11,13 +11,14 @@
 #pragma once
 #include "FreeRTOS.h"
 #include "semphr.h"
-#include "FusionMath.h"
+#include "../fusion/FusionMath.h"
 
 typedef struct {
 	FusionVector gyro;
 	FusionVector acc;
 	FusionVector mag;
 	TickType_t timestamp;
+	uint8_t flags;
 } ImuSample_t;
 
 typedef struct {
@@ -25,7 +26,17 @@ typedef struct {
 	TickType_t timestamp;
 } FusionOutput_t;
 
-extern ImuSample_t gImuData;
+extern ImuSample_t gImuData[2];
+extern volatile uint8_t gImuWriteIndex; /* toggled by producer */
+extern volatile uint8_t gImuReadIndex;  /* used by consumer */
+
+
+typedef struct {
+	uint32_t id;
+	uint8_t data[8];
+	uint32_t len;
+} CAN_Rx_t;
+
 extern FusionOutput_t gFusionData;
 
 #endif /* SHARED_SHARED_DATA_H_ */

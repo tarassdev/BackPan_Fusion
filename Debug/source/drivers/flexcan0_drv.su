@@ -1,0 +1,3 @@
+C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\drivers/fsl_flexcan.h:891:24:FLEXCAN_GetMbStatusFlags	16	static
+C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\drivers/fsl_flexcan.h:913:20:FLEXCAN_ClearMbStatusFlags	16	static
+../source/drivers/flexcan0_drv.c:16:6:CAN0_ORed_Message_buffer_IRQHandler	72	static

@@ -15,7 +15,5 @@
 #define ACC_MB_ID 0x34
 #define MAG_MB_ID 0x41
 
-void CAN0_ORed_Message_buffer_IRQHandler(void);
-
 
 #endif /* DRIVERS_FLEXCAN0_DRV_H_ */
