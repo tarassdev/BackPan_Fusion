@@ -68,15 +68,21 @@ void TaskIMU(void *pvParameters) {
 
 void Decode_RateOfTurnHR(uint8_t *data, FusionVector *gyro)
 {
-
+	gyro->axis.x = (float)(GYRO_RESOLUTION * (((uint16_t)data[1]) << 8 | (uint16_t)data[0]));
+	gyro->axis.y = (float)(GYRO_RESOLUTION * (((uint16_t)data[3]) << 8 | (uint16_t)data[2]));
+	gyro->axis.z = (float)(GYRO_RESOLUTION * (((uint16_t)data[5]) << 8 | (uint16_t)data[4]));
 }
 
 void Decode_AccelerationHR(uint8_t *data, FusionVector *acc)
 {
-
+	acc->axis.x = (float)(ACC_RESOLUTION * (((uint16_t)data[1]) << 8 | (uint16_t)data[0]));
+	acc->axis.y = (float)(ACC_RESOLUTION * (((uint16_t)data[3]) << 8 | (uint16_t)data[2]));
+	acc->axis.z = (float)(ACC_RESOLUTION * (((uint16_t)data[5]) << 8 | (uint16_t)data[4]));
 }
 
 void Decode_MagneticField(uint8_t *data, FusionVector *mag)
 {
-
+	mag->axis.x = (float)(MAG_RESOLUTION * (((uint16_t)data[1]) << 8 | (uint16_t)data[0]));
+	mag->axis.y = (float)(MAG_RESOLUTION * (((uint16_t)data[3]) << 8 | (uint16_t)data[2]));
+	mag->axis.z = (float)(MAG_RESOLUTION * (((uint16_t)data[5]) << 8 | (uint16_t)data[4]));
 }

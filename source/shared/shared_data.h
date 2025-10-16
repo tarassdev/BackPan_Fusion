@@ -37,6 +37,6 @@ typedef struct {
 	uint32_t len;
 } CAN_Rx_t;
 
-extern FusionOutput_t gFusionData;
+extern FusionOutput_t gFusionOutput;
 
 #endif /* SHARED_SHARED_DATA_H_ */

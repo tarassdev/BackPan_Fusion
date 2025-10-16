@@ -39,7 +39,21 @@ source/kfx_backpan_fusion.o source/kfx_backpan_fusion.d: \
  C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\component\serial_manager/serial_port_uart.h \
  C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\component\uart/uart.h \
  C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\board/pin_mux.h \
- C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\board/clock_config.h
+ C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\board/clock_config.h \
+ ../source/drivers/flexcan0_drv.h \
+ C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\device/MKV56F24.h \
+ ../source/drivers/flexcan1_drv.h ../source/drivers/pit_drv.h \
+ ../source/drivers/../tasks/task_fusion.h \
+ C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\freertos\freertos_kernel\include/task.h \
+ C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\source/shared/shared_data.h \
+ C:/Users/Lenovo/Documents/MCUXpressoIDE_25.6.136/workspace/kfx_backpan_fusion/source/fusion/FusionMath.h \
+ ../source/shared/semaphores.h \
+ C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\freertos\freertos_kernel\include/queue.h \
+ ../source/tasks/task_imu.h \
+ C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\source/drivers/flexcan0_drv.h \
+ ../source/tasks/task_fusion.h ../source/tasks/task_canopen.h \
+ C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\source/drivers/flexcan1_drv.h \
+ ../source/app_init.h
 C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\board/board.h:
 C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\board/peripherals.h:
 C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\drivers/fsl_common.h:
@@ -80,3 +94,19 @@ C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\co
 C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\component\uart/uart.h:
 C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\board/pin_mux.h:
 C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\board/clock_config.h:
+../source/drivers/flexcan0_drv.h:
+C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\device/MKV56F24.h:
+../source/drivers/flexcan1_drv.h:
+../source/drivers/pit_drv.h:
+../source/drivers/../tasks/task_fusion.h:
+C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\freertos\freertos_kernel\include/task.h:
+C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\source/shared/shared_data.h:
+C:/Users/Lenovo/Documents/MCUXpressoIDE_25.6.136/workspace/kfx_backpan_fusion/source/fusion/FusionMath.h:
+../source/shared/semaphores.h:
+C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\freertos\freertos_kernel\include/queue.h:
+../source/tasks/task_imu.h:
+C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\source/drivers/flexcan0_drv.h:
+../source/tasks/task_fusion.h:
+../source/tasks/task_canopen.h:
+C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\source/drivers/flexcan1_drv.h:
+../source/app_init.h:

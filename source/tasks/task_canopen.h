@@ -14,7 +14,7 @@
 #include "drivers/flexcan1_drv.h"
 #include "shared/shared_data.h"
 
-void TaskCANopen_init(void);
+void TaskCANopen_Init(void);
 void TaskCANopen(void *pvParameters);
 
 #endif /* TASKS_TASK_CANOPEN_H_ */

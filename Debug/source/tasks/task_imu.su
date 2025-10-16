@@ -1,5 +1,5 @@
 ../source/tasks/task_imu.c:22:6:TaskIMU_Init	16	static
 ../source/tasks/task_imu.c:26:6:TaskIMU	40	static
 ../source/tasks/task_imu.c:69:6:Decode_RateOfTurnHR	16	static
-../source/tasks/task_imu.c:74:6:Decode_AccelerationHR	16	static
-../source/tasks/task_imu.c:78:6:Decode_MagneticField	16	static
+../source/tasks/task_imu.c:76:6:Decode_AccelerationHR	16	static
+../source/tasks/task_imu.c:83:6:Decode_MagneticField	16	static
