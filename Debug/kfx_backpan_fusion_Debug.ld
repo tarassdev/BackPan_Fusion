@@ -6,7 +6,7 @@
  * Generated linker script file for MKV56F1M0xxx24
  * Created from linkscript.ldt by FMCreateLinkLibraries
  * Using Freemarker v2.3.30
- * MCUXpresso IDE v25.6 [Build 136] [2025-06-27] on Oct 16, 2025, 5:17:14 PM
+ * MCUXpresso IDE v25.6 [Build 136] [2025-06-27] on Oct 20, 2025, 7:03:09 PM
  */
 
 INCLUDE "kfx_backpan_fusion_Debug_library.ld"

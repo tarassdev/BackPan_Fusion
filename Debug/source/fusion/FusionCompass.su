@@ -1,0 +1,9 @@
+../source/fusion/FusionMath.h:136:21:FusionRadiansToDegrees	16	static
+../source/fusion/FusionMath.h:168:21:FusionFastInverseSqrt	24	static
+../source/fusion/FusionMath.h:229:21:FusionVectorSum	24	static
+../source/fusion/FusionMath.h:239:28:FusionVectorMultiplyScalar	64	static
+../source/fusion/FusionMath.h:254:28:FusionVectorHadamardProduct	72	static
+../source/fusion/FusionMath.h:269:28:FusionVectorCrossProduct	72	static
+../source/fusion/FusionMath.h:297:21:FusionVectorMagnitudeSquared	40	static
+../source/fusion/FusionMath.h:315:28:FusionVectorNormalise	56	static
+../source/fusion/FusionCompass.c:25:7:FusionCompassCalculateHeading	208	static
