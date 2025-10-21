@@ -4,14 +4,17 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../source/fusion/FusionAhrs.c \
 ../source/fusion/FusionCompass.c \
 ../source/fusion/FusionOffset.c 
 
 C_DEPS += \
+./source/fusion/FusionAhrs.d \
 ./source/fusion/FusionCompass.d \
 ./source/fusion/FusionOffset.d 
 
 OBJS += \
+./source/fusion/FusionAhrs.o \
 ./source/fusion/FusionCompass.o \
 ./source/fusion/FusionOffset.o 
 
@@ -28,7 +31,7 @@ source/fusion/%.o: ../source/fusion/%.c source/fusion/subdir.mk
 clean: clean-source-2f-fusion
 
 clean-source-2f-fusion:
-	-$(RM) ./source/fusion/FusionCompass.d ./source/fusion/FusionCompass.o ./source/fusion/FusionOffset.d ./source/fusion/FusionOffset.o
+	-$(RM) ./source/fusion/FusionAhrs.d ./source/fusion/FusionAhrs.o ./source/fusion/FusionCompass.d ./source/fusion/FusionCompass.o ./source/fusion/FusionOffset.d ./source/fusion/FusionOffset.o
 
 .PHONY: clean-source-2f-fusion
 

@@ -1,0 +1,89 @@
+/**
+ * @file FusionAhrs.h
+ * @brief AHRS algorithm to combine gyroscope, accelerometer, and magnetometer
+ * measurements into a single measurement of orientation relative to the Earth.
+ */
+
+#ifndef FUSION_AHRS_H
+#define FUSION_AHRS_H
+
+//------------------------------------------------------------------------------
+// Includes
+
+#include "FusionConvention.h"
+#include "FusionMath.h"
+#include <stdbool.h>
+
+//------------------------------------------------------------------------------
+// Definitions
+
+/**
+ * @brief AHRS algorithm settings.
+ */
+typedef struct {
+    FusionConvention convention;
+    float gain;
+    float gyroscopeRange;
+    float accelerationRejection;
+    float magneticRejection;
+    unsigned int recoveryTriggerPeriod;
+} FusionAhrsSettings;
+
+/**
+ * @brief AHRS algorithm structure. Structure members are used internally and
+ * must not be accessed by the application.
+ */
+typedef struct {
+    FusionAhrsSettings settings;
+    FusionQuaternion quaternion;
+    FusionVector accelerometer;
+    bool initialising;
+    float rampedGain;
+    float rampedGainStep;
+    bool angularRateRecovery;
+    FusionVector halfAccelerometerFeedback;
+    FusionVector halfMagnetometerFeedback;
+    bool accelerometerIgnored;
+    int accelerationRecoveryTrigger;
+    int accelerationRecoveryTimeout;
+    bool magnetometerIgnored;
+    int magneticRecoveryTrigger;
+    int magneticRecoveryTimeout;
+} FusionAhrs;
+
+/**
+ * @brief AHRS algorithm internal states.
+ */
+typedef struct {
+    float accelerationError;
+    bool accelerometerIgnored;
+    float accelerationRecoveryTrigger;
+    float magneticError;
+    bool magnetometerIgnored;
+    float magneticRecoveryTrigger;
+} FusionAhrsInternalStates;
+
+/**
+ * @brief AHRS algorithm flags.
+ */
+typedef struct {
+    bool initialising;
+    bool angularRateRecovery;
+    bool accelerationRecovery;
+    bool magneticRecovery;
+} FusionAhrsFlags;
+
+//------------------------------------------------------------------------------
+// Function declarations
+
+void FusionAhrsInitialise(FusionAhrs *const ahrs);
+
+void FusionAhrsReset(FusionAhrs *const ahrs);
+
+void FusionAhrsSetSettings(FusionAhrs *const ahrs, const FusionAhrsSettings *const settings);
+
+
+#endif
+
+//------------------------------------------------------------------------------
+// End of file

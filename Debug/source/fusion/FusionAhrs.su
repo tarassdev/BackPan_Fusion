@@ -1,0 +1,4 @@
+../source/fusion/FusionMath.h:127:21:FusionDegreesToRadians	16	static
+../source/fusion/FusionAhrs.c:45:6:FusionAhrsInitialise	48	static
+../source/fusion/FusionAhrs.c:63:6:FusionAhrsReset	72	static
+../source/fusion/FusionAhrs.c:84:6:FusionAhrsSetSettings	16	static
