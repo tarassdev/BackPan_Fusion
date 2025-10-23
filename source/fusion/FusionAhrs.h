@@ -82,6 +82,15 @@ void FusionAhrsReset(FusionAhrs *const ahrs);
 
 void FusionAhrsSetSettings(FusionAhrs *const ahrs, const FusionAhrsSettings *const settings);
 
+FusionVector FusionAhrsGetLinearAcceleration(const FusionAhrs *const ahrs);
+
+FusionVector FusionAhrsGetEarthAcceleration(const FusionAhrs *const ahrs);
+
+FusionAhrsInternalStates FusionAhrsGetInternalStates(const FusionAhrs *const ahrs);
+
+FusionAhrsFlags FusionAhrsGetFlags(const FusionAhrs *const ahrs);
+
+void FusionAhrsSetHeading(FusionAhrs *const ahrs, const float heading);
 
 #endif
 
