@@ -92,6 +92,16 @@ FusionAhrsFlags FusionAhrsGetFlags(const FusionAhrs *const ahrs);
 
 void FusionAhrsSetHeading(FusionAhrs *const ahrs, const float heading);
 
+void FusionAhrsUpdateNoMagnetometer(FusionAhrs *const ahrs, const FusionVector gyroscope, const FusionVector accelerometer, const float deltaTime);
+
+void FusionAhrsUpdateExternalHeading(FusionAhrs *const ahrs, const FusionVector gyroscope, const FusionVector accelerometer, const float heading, const float deltaTime);
+
+FusionQuaternion FusionAhrsGetQuaternion(const FusionAhrs *const ahrs);
+
+void FusionAhrsSetQuaternion(FusionAhrs *const ahrs, const FusionQuaternion quaternion);
+
+FusionVector FusionAhrsGetGravity(const FusionAhrs *const ahrs);
+
 #endif
 
 //------------------------------------------------------------------------------
