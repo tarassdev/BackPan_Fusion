@@ -6,7 +6,7 @@
  * Generated linker script file for MKV56F1M0xxx24
  * Created from memory.ldt by FMCreateLinkMemory
  * Using Freemarker v2.3.30
- * MCUXpresso IDE v25.6 [Build 136] [2025-06-27] on Oct 30, 2025, 9:52:34 AM
+ * MCUXpresso IDE v25.6 [Build 136] [2025-06-27] on Nov 1, 2025, 12:27:10 PM
  */
 
 MEMORY

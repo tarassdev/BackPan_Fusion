@@ -230,6 +230,40 @@ static inline float FusionVectorSum(const FusionVector vector) {
     return vector.axis.x + vector.axis.y + vector.axis.z;
 }
 
+
+/**
+ * @brief Returns the normalised vector.
+ * @param vector Vector.
+ * @return Normalised vector.
+ */
+static inline FusionVector FusionVectorNormalise(const FusionVector vector) {
+#ifdef FUSION_USE_NORMAL_SQRT
+    const float magnitudeReciprocal = 1.0f / sqrtf(FusionVectorMagnitudeSquared(vector));
+#else
+    const float magnitudeReciprocal = FusionFastInverseSqrt(FusionVectorMagnitudeSquared(vector));
+#endif
+    return FusionVectorMultiplyScalar(vector, magnitudeReciprocal);
+}
+
+//------------------------------------------------------------------------------
+// Inline functions - Quaternion operations
+
+/**
+ * @brief Returns the sum of two quaternions.
+ * @param quaternionA Quaternion A.
+ * @param quaternionB Quaternion B.
+ * @return Sum of two quaternions.
+ */
+static inline FusionQuaternion FusionQuaternionAdd(const FusionQuaternion quaternionA, const FusionQuaternion quaternionB) {
+    const FusionQuaternion result = {.element = {
+            .w = quaternionA.element.w + quaternionB.element.w,
+            .x = quaternionA.element.x + quaternionB.element.x,
+            .y = quaternionA.element.y + quaternionB.element.y,
+            .z = quaternionA.element.z + quaternionB.element.z,
+    }};
+    return result;
+}
+
 /**
  * @brief Returns the multiplication of a vector by a scalar.
  * @param vector Vector.
@@ -307,38 +341,6 @@ static inline float FusionVectorMagnitude(const FusionVector vector) {
     return sqrtf(FusionVectorMagnitudeSquared(vector));
 }
 
-/**
- * @brief Returns the normalised vector.
- * @param vector Vector.
- * @return Normalised vector.
- */
-static inline FusionVector FusionVectorNormalise(const FusionVector vector) {
-#ifdef FUSION_USE_NORMAL_SQRT
-    const float magnitudeReciprocal = 1.0f / sqrtf(FusionVectorMagnitudeSquared(vector));
-#else
-    const float magnitudeReciprocal = FusionFastInverseSqrt(FusionVectorMagnitudeSquared(vector));
-#endif
-    return FusionVectorMultiplyScalar(vector, magnitudeReciprocal);
-}
-
-//------------------------------------------------------------------------------
-// Inline functions - Quaternion operations
-
-/**
- * @brief Returns the sum of two quaternions.
- * @param quaternionA Quaternion A.
- * @param quaternionB Quaternion B.
- * @return Sum of two quaternions.
- */
-static inline FusionQuaternion FusionQuaternionAdd(const FusionQuaternion quaternionA, const FusionQuaternion quaternionB) {
-    const FusionQuaternion result = {.element = {
-            .w = quaternionA.element.w + quaternionB.element.w,
-            .x = quaternionA.element.x + quaternionB.element.x,
-            .y = quaternionA.element.y + quaternionB.element.y,
-            .z = quaternionA.element.z + quaternionB.element.z,
-    }};
-    return result;
-}
 
 /**
  * @brief Returns the multiplication of two quaternions.

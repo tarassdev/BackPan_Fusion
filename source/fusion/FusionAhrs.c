@@ -100,120 +100,6 @@ void FusionAhrsSetSettings(FusionAhrs *const ahrs, const FusionAhrsSettings *con
     ahrs->rampedGainStep = (INITIAL_GAIN - ahrs->settings.gain) / INITIALISATION_PERIOD;
 }
 
-/**
- * @brief Updates the AHRS algorithm using the gyroscope, accelerometer, and
- * magnetometer measurements.
- * @param ahrs AHRS algorithm structure.
- * @param gyroscope Gyroscope measurement in degrees per second.
- * @param accelerometer Accelerometer measurement in g.
- * @param magnetometer Magnetometer measurement in arbitrary units.
- * @param deltaTime Delta time in seconds.
- */
-void FusionAhrsUpdate(FusionAhrs *const ahrs, const FusionVector gyroscope, const FusionVector accelerometer, const FusionVector magnetometer, const float deltaTime) {
-#define Q ahrs->quaternion.element
-
-    // Store accelerometer
-    ahrs->accelerometer = accelerometer;
-
-    // Reinitialise if gyroscope range exceeded
-    if ((fabsf(gyroscope.axis.x) > ahrs->settings.gyroscopeRange) || (fabsf(gyroscope.axis.y) > ahrs->settings.gyroscopeRange) || (fabsf(gyroscope.axis.z) > ahrs->settings.gyroscopeRange)) {
-        const FusionQuaternion quaternion = ahrs->quaternion;
-        FusionAhrsReset(ahrs);
-        ahrs->quaternion = quaternion;
-        ahrs->angularRateRecovery = true;
-    }
-
-    // Ramp down gain during initialisation
-    if (ahrs->initialising) {
-        ahrs->rampedGain -= ahrs->rampedGainStep * deltaTime;
-        if ((ahrs->rampedGain < ahrs->settings.gain) || (ahrs->settings.gain == 0.0f)) {
-            ahrs->rampedGain = ahrs->settings.gain;
-            ahrs->initialising = false;
-            ahrs->angularRateRecovery = false;
-        }
-    }
-
-    // Calculate direction of gravity indicated by algorithm
-    const FusionVector halfGravity = HalfGravity(ahrs);
-
-    // Calculate accelerometer feedback
-    FusionVector halfAccelerometerFeedback = FUSION_VECTOR_ZERO;
-    ahrs->accelerometerIgnored = true;
-    if (FusionVectorIsZero(accelerometer) == false) {
-
-        // Calculate accelerometer feedback scaled by 0.5
-        ahrs->halfAccelerometerFeedback = Feedback(FusionVectorNormalise(accelerometer), halfGravity);
-
-        // Don't ignore accelerometer if acceleration error below threshold
-        if (ahrs->initialising || ((FusionVectorMagnitudeSquared(ahrs->halfAccelerometerFeedback) <= ahrs->settings.accelerationRejection))) {
-            ahrs->accelerometerIgnored = false;
-            ahrs->accelerationRecoveryTrigger -= 9;
-        } else {
-            ahrs->accelerationRecoveryTrigger += 1;
-        }
-
-        // Don't ignore accelerometer during acceleration recovery
-        if (ahrs->accelerationRecoveryTrigger > ahrs->accelerationRecoveryTimeout) {
-            ahrs->accelerationRecoveryTimeout = 0;
-            ahrs->accelerometerIgnored = false;
-        } else {
-            ahrs->accelerationRecoveryTimeout = ahrs->settings.recoveryTriggerPeriod;
-        }
-        ahrs->accelerationRecoveryTrigger = Clamp(ahrs->accelerationRecoveryTrigger, 0, ahrs->settings.recoveryTriggerPeriod);
-
-        // Apply accelerometer feedback
-        if (ahrs->accelerometerIgnored == false) {
-            halfAccelerometerFeedback = ahrs->halfAccelerometerFeedback;
-        }
-    }
-
-    // Calculate magnetometer feedback
-    FusionVector halfMagnetometerFeedback = FUSION_VECTOR_ZERO;
-    ahrs->magnetometerIgnored = true;
-    if (FusionVectorIsZero(magnetometer) == false) {
-
-        // Calculate direction of magnetic field indicated by algorithm
-        const FusionVector halfMagnetic = HalfMagnetic(ahrs);
-
-        // Calculate magnetometer feedback scaled by 0.5
-        ahrs->halfMagnetometerFeedback = Feedback(FusionVectorNormalise(FusionVectorCrossProduct(halfGravity, magnetometer)), halfMagnetic);
-
-        // Don't ignore magnetometer if magnetic error below threshold
-        if (ahrs->initialising || ((FusionVectorMagnitudeSquared(ahrs->halfMagnetometerFeedback) <= ahrs->settings.magneticRejection))) {
-            ahrs->magnetometerIgnored = false;
-            ahrs->magneticRecoveryTrigger -= 9;
-        } else {
-            ahrs->magneticRecoveryTrigger += 1;
-        }
-
-        // Don't ignore magnetometer during magnetic recovery
-        if (ahrs->magneticRecoveryTrigger > ahrs->magneticRecoveryTimeout) {
-            ahrs->magneticRecoveryTimeout = 0;
-            ahrs->magnetometerIgnored = false;
-        } else {
-            ahrs->magneticRecoveryTimeout = ahrs->settings.recoveryTriggerPeriod;
-        }
-        ahrs->magneticRecoveryTrigger = Clamp(ahrs->magneticRecoveryTrigger, 0, ahrs->settings.recoveryTriggerPeriod);
-
-        // Apply magnetometer feedback
-        if (ahrs->magnetometerIgnored == false) {
-            halfMagnetometerFeedback = ahrs->halfMagnetometerFeedback;
-        }
-    }
-
-    // Convert gyroscope to radians per second scaled by 0.5
-    const FusionVector halfGyroscope = FusionVectorMultiplyScalar(gyroscope, FusionDegreesToRadians(0.5f));
-
-    // Apply feedback to gyroscope
-    const FusionVector adjustedHalfGyroscope = FusionVectorAdd(halfGyroscope, FusionVectorMultiplyScalar(FusionVectorAdd(halfAccelerometerFeedback, halfMagnetometerFeedback), ahrs->rampedGain));
-
-    // Integrate rate of change of quaternion
-    ahrs->quaternion = FusionQuaternionAdd(ahrs->quaternion, FusionQuaternionMultiplyVector(ahrs->quaternion, FusionVectorMultiplyScalar(adjustedHalfGyroscope, deltaTime)));
-
-    // Normalise quaternion
-    ahrs->quaternion = FusionQuaternionNormalise(ahrs->quaternion);
-#undef Q
-}
 
 /**
  * @brief Returns the direction of gravity scaled by 0.5.
@@ -504,6 +390,122 @@ void FusionAhrsSetHeading(FusionAhrs *const ahrs, const float heading) {
     ahrs->quaternion = FusionQuaternionMultiply(rotation, ahrs->quaternion);
 #undef Q
 }
+
+/**
+ * @brief Updates the AHRS algorithm using the gyroscope, accelerometer, and
+ * magnetometer measurements.
+ * @param ahrs AHRS algorithm structure.
+ * @param gyroscope Gyroscope measurement in degrees per second.
+ * @param accelerometer Accelerometer measurement in g.
+ * @param magnetometer Magnetometer measurement in arbitrary units.
+ * @param deltaTime Delta time in seconds.
+ */
+void FusionAhrsUpdate(FusionAhrs *const ahrs, const FusionVector gyroscope, const FusionVector accelerometer, const FusionVector magnetometer, const float deltaTime) {
+#define Q ahrs->quaternion.element
+
+    // Store accelerometer
+    ahrs->accelerometer = accelerometer;
+
+    // Reinitialise if gyroscope range exceeded
+    if ((fabsf(gyroscope.axis.x) > ahrs->settings.gyroscopeRange) || (fabsf(gyroscope.axis.y) > ahrs->settings.gyroscopeRange) || (fabsf(gyroscope.axis.z) > ahrs->settings.gyroscopeRange)) {
+        const FusionQuaternion quaternion = ahrs->quaternion;
+        FusionAhrsReset(ahrs);
+        ahrs->quaternion = quaternion;
+        ahrs->angularRateRecovery = true;
+    }
+
+    // Ramp down gain during initialisation
+    if (ahrs->initialising) {
+        ahrs->rampedGain -= ahrs->rampedGainStep * deltaTime;
+        if ((ahrs->rampedGain < ahrs->settings.gain) || (ahrs->settings.gain == 0.0f)) {
+            ahrs->rampedGain = ahrs->settings.gain;
+            ahrs->initialising = false;
+            ahrs->angularRateRecovery = false;
+        }
+    }
+
+    // Calculate direction of gravity indicated by algorithm
+    const FusionVector halfGravity = HalfGravity(ahrs);
+
+    // Calculate accelerometer feedback
+    FusionVector halfAccelerometerFeedback = FUSION_VECTOR_ZERO;
+    ahrs->accelerometerIgnored = true;
+    if (FusionVectorIsZero(accelerometer) == false) {
+
+        // Calculate accelerometer feedback scaled by 0.5
+        ahrs->halfAccelerometerFeedback = Feedback(FusionVectorNormalise(accelerometer), halfGravity);
+
+        // Don't ignore accelerometer if acceleration error below threshold
+        if (ahrs->initialising || ((FusionVectorMagnitudeSquared(ahrs->halfAccelerometerFeedback) <= ahrs->settings.accelerationRejection))) {
+            ahrs->accelerometerIgnored = false;
+            ahrs->accelerationRecoveryTrigger -= 9;
+        } else {
+            ahrs->accelerationRecoveryTrigger += 1;
+        }
+
+        // Don't ignore accelerometer during acceleration recovery
+        if (ahrs->accelerationRecoveryTrigger > ahrs->accelerationRecoveryTimeout) {
+            ahrs->accelerationRecoveryTimeout = 0;
+            ahrs->accelerometerIgnored = false;
+        } else {
+            ahrs->accelerationRecoveryTimeout = ahrs->settings.recoveryTriggerPeriod;
+        }
+        ahrs->accelerationRecoveryTrigger = Clamp(ahrs->accelerationRecoveryTrigger, 0, ahrs->settings.recoveryTriggerPeriod);
+
+        // Apply accelerometer feedback
+        if (ahrs->accelerometerIgnored == false) {
+            halfAccelerometerFeedback = ahrs->halfAccelerometerFeedback;
+        }
+    }
+
+    // Calculate magnetometer feedback
+    FusionVector halfMagnetometerFeedback = FUSION_VECTOR_ZERO;
+    ahrs->magnetometerIgnored = true;
+    if (FusionVectorIsZero(magnetometer) == false) {
+
+        // Calculate direction of magnetic field indicated by algorithm
+        const FusionVector halfMagnetic = HalfMagnetic(ahrs);
+
+        // Calculate magnetometer feedback scaled by 0.5
+        ahrs->halfMagnetometerFeedback = Feedback(FusionVectorNormalise(FusionVectorCrossProduct(halfGravity, magnetometer)), halfMagnetic);
+
+        // Don't ignore magnetometer if magnetic error below threshold
+        if (ahrs->initialising || ((FusionVectorMagnitudeSquared(ahrs->halfMagnetometerFeedback) <= ahrs->settings.magneticRejection))) {
+            ahrs->magnetometerIgnored = false;
+            ahrs->magneticRecoveryTrigger -= 9;
+        } else {
+            ahrs->magneticRecoveryTrigger += 1;
+        }
+
+        // Don't ignore magnetometer during magnetic recovery
+        if (ahrs->magneticRecoveryTrigger > ahrs->magneticRecoveryTimeout) {
+            ahrs->magneticRecoveryTimeout = 0;
+            ahrs->magnetometerIgnored = false;
+        } else {
+            ahrs->magneticRecoveryTimeout = ahrs->settings.recoveryTriggerPeriod;
+        }
+        ahrs->magneticRecoveryTrigger = Clamp(ahrs->magneticRecoveryTrigger, 0, ahrs->settings.recoveryTriggerPeriod);
+
+        // Apply magnetometer feedback
+        if (ahrs->magnetometerIgnored == false) {
+            halfMagnetometerFeedback = ahrs->halfMagnetometerFeedback;
+        }
+    }
+
+    // Convert gyroscope to radians per second scaled by 0.5
+    const FusionVector halfGyroscope = FusionVectorMultiplyScalar(gyroscope, FusionDegreesToRadians(0.5f));
+
+    // Apply feedback to gyroscope
+    const FusionVector adjustedHalfGyroscope = FusionVectorAdd(halfGyroscope, FusionVectorMultiplyScalar(FusionVectorAdd(halfAccelerometerFeedback, halfMagnetometerFeedback), ahrs->rampedGain));
+
+    // Integrate rate of change of quaternion
+    ahrs->quaternion = FusionQuaternionAdd(ahrs->quaternion, FusionQuaternionMultiplyVector(ahrs->quaternion, FusionVectorMultiplyScalar(adjustedHalfGyroscope, deltaTime)));
+
+    // Normalise quaternion
+    ahrs->quaternion = FusionQuaternionNormalise(ahrs->quaternion);
+#undef Q
+}
+
 
 //------------------------------------------------------------------------------
 // End of file
