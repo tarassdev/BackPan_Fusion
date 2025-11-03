@@ -12,6 +12,7 @@
 #include "drivers/flexcan1_drv.h"
 
 
+
 TaskHandle_t fusionTaskHandle = NULL;
 
 #define FUSION_STACK_SIZE  (1024)
@@ -60,27 +61,27 @@ void TaskFusion(void *pvParameters) {
 	            FusionVector mag = localSample.mag;
 
 	            /* apply gyro offset correction */
-	            gyro = FusionOffsetUpdate(&gyroOffset, gyro);
+//	            gyro = FusionOffsetUpdate(&gyroOffset, gyro);
 
 	            /* choose update depending on magnetometer presence */
 	            if ((localSample.flags & 0x04U) != 0U) {
-	                FusionAhrsUpdate(&ahrs, gyro, acc, mag, FUSION_DT_SECONDS);
+//	                FusionAhrsUpdate(&ahrs, gyro, acc, mag, FUSION_DT_SECONDS);
 	            } else {
-	                FusionAhrsUpdateNoMagnetometer(&ahrs, gyro, acc, FUSION_DT_SECONDS);
+//	                FusionAhrsUpdateNoMagnetometer(&ahrs, gyro, acc, FUSION_DT_SECONDS);
 	            }
 
 	            /* store result protected by mutex */
 	            if (xFusionOutputMutex != NULL) {
 	                if (xSemaphoreTake(xFusionOutputMutex, pdMS_TO_TICKS(2)) == pdTRUE) {
 //	                	gFusionOutput.timestamp_us = localSample.timestamp_us;
-	                	gFusionOutput.quat = FusionAhrsGetQuaternion(&ahrs);
-	                	gFusionOutput.euler = FusionQuaternionToEuler(gFusionOutput.quat);
+//	                	gFusionOutput.quat = FusionAhrsGetQuaternion(&ahrs);
+//	                	gFusionOutput.euler = FusionQuaternionToEuler(gFusionOutput.quat);
 	                    xSemaphoreGive(xFusionOutputMutex);
 	                }
 	            } else {
 //	            	gFusionOutput.timestamp_us = localSample.timestamp_us;
-	            	gFusionOutput.quat = FusionAhrsGetQuaternion(&ahrs);
-	            	gFusionOutput.euler = FusionQuaternionToEuler(gFusionOutput.quat);
+//	            	gFusionOutput.quat = FusionAhrsGetQuaternion(&ahrs);
+//	            	gFusionOutput.euler = FusionQuaternionToEuler(gFusionOutput.quat);
 	            }
 	            /* optionally signal CANopen task by semaphore (not shown) */
 	        } else {

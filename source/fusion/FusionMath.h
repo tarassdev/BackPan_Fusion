@@ -5,6 +5,7 @@
  * @brief Math library.
  */
 
+
 #ifndef FUSION_MATH_H
 #define FUSION_MATH_H
 
@@ -47,6 +48,7 @@ typedef union {
 
 /**
  * @brief 3x3 matrix in row-major order.
+ * See http://en.wikipedia.org/wiki/Row-major_order
  */
 typedef union {
     float array[3][3];
@@ -162,6 +164,7 @@ static inline float FusionAsin(const float value) {
 
 /**
  * @brief Calculates the reciprocal of the square root.
+ * See https://pizer.wordpress.com/2008/10/12/fast-inverse-square-root/
  * @param x Operand.
  * @return Reciprocal of the square root of x.
  */
@@ -228,40 +231,6 @@ static inline FusionVector FusionVectorSubtract(const FusionVector vectorA, cons
  */
 static inline float FusionVectorSum(const FusionVector vector) {
     return vector.axis.x + vector.axis.y + vector.axis.z;
-}
-
-
-/**
- * @brief Returns the normalised vector.
- * @param vector Vector.
- * @return Normalised vector.
- */
-static inline FusionVector FusionVectorNormalise(const FusionVector vector) {
-#ifdef FUSION_USE_NORMAL_SQRT
-    const float magnitudeReciprocal = 1.0f / sqrtf(FusionVectorMagnitudeSquared(vector));
-#else
-    const float magnitudeReciprocal = FusionFastInverseSqrt(FusionVectorMagnitudeSquared(vector));
-#endif
-    return FusionVectorMultiplyScalar(vector, magnitudeReciprocal);
-}
-
-//------------------------------------------------------------------------------
-// Inline functions - Quaternion operations
-
-/**
- * @brief Returns the sum of two quaternions.
- * @param quaternionA Quaternion A.
- * @param quaternionB Quaternion B.
- * @return Sum of two quaternions.
- */
-static inline FusionQuaternion FusionQuaternionAdd(const FusionQuaternion quaternionA, const FusionQuaternion quaternionB) {
-    const FusionQuaternion result = {.element = {
-            .w = quaternionA.element.w + quaternionB.element.w,
-            .x = quaternionA.element.x + quaternionB.element.x,
-            .y = quaternionA.element.y + quaternionB.element.y,
-            .z = quaternionA.element.z + quaternionB.element.z,
-    }};
-    return result;
 }
 
 /**
@@ -341,6 +310,38 @@ static inline float FusionVectorMagnitude(const FusionVector vector) {
     return sqrtf(FusionVectorMagnitudeSquared(vector));
 }
 
+/**
+ * @brief Returns the normalised vector.
+ * @param vector Vector.
+ * @return Normalised vector.
+ */
+static inline FusionVector FusionVectorNormalise(const FusionVector vector) {
+#ifdef FUSION_USE_NORMAL_SQRT
+    const float magnitudeReciprocal = 1.0f / sqrtf(FusionVectorMagnitudeSquared(vector));
+#else
+    const float magnitudeReciprocal = FusionFastInverseSqrt(FusionVectorMagnitudeSquared(vector));
+#endif
+    return FusionVectorMultiplyScalar(vector, magnitudeReciprocal);
+}
+
+//------------------------------------------------------------------------------
+// Inline functions - Quaternion operations
+
+/**
+ * @brief Returns the sum of two quaternions.
+ * @param quaternionA Quaternion A.
+ * @param quaternionB Quaternion B.
+ * @return Sum of two quaternions.
+ */
+static inline FusionQuaternion FusionQuaternionAdd(const FusionQuaternion quaternionA, const FusionQuaternion quaternionB) {
+    const FusionQuaternion result = {.element = {
+            .w = quaternionA.element.w + quaternionB.element.w,
+            .x = quaternionA.element.x + quaternionB.element.x,
+            .y = quaternionA.element.y + quaternionB.element.y,
+            .z = quaternionA.element.z + quaternionB.element.z,
+    }};
+    return result;
+}
 
 /**
  * @brief Returns the multiplication of two quaternions.
@@ -363,9 +364,9 @@ static inline FusionQuaternion FusionQuaternionMultiply(const FusionQuaternion q
 }
 
 /**
- * @brief Returns the multiplication of a quaternion with a vector.  This is a
+ * @brief Returns the multiplication of a quaternion with a vector. This is a
  * normal quaternion multiplication where the vector is treated a
- * quaternion with a W element value of zero.  The quaternion is post-
+ * quaternion with a W element value of zero. The quaternion is post-
  * multiplied by the vector.
  * @param quaternion Quaternion.
  * @param vector Vector.

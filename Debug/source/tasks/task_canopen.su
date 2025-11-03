@@ -1,0 +1,2 @@
+../source/tasks/task_canopen.c:12:6:TaskCANopen_Init	16	static
+../source/tasks/task_canopen.c:19:6:TaskCANopen	16	static

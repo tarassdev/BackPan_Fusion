@@ -727,8 +727,6 @@ Discarded input sections
                 0x00000000       0xc8 ./source/fusion/FusionAhrs.o
  .text.FusionAhrsSetSettings
                 0x00000000      0x170 ./source/fusion/FusionAhrs.o
- .text.FusionAhrsUpdate
-                0x00000000      0x736 ./source/fusion/FusionAhrs.o
  .text.HalfGravity
                 0x00000000      0x17a ./source/fusion/FusionAhrs.o
  .text.HalfMagnetic
@@ -756,8 +754,10 @@ Discarded input sections
                 0x00000000       0x6a ./source/fusion/FusionAhrs.o
  .text.FusionAhrsSetHeading
                 0x00000000      0x12c ./source/fusion/FusionAhrs.o
- .debug_info    0x00000000      0xf4f ./source/fusion/FusionAhrs.o
- .debug_abbrev  0x00000000      0x2b7 ./source/fusion/FusionAhrs.o
+ .text.FusionAhrsUpdate
+                0x00000000      0x736 ./source/fusion/FusionAhrs.o
+ .debug_info    0x00000000      0xf45 ./source/fusion/FusionAhrs.o
+ .debug_abbrev  0x00000000      0x2c4 ./source/fusion/FusionAhrs.o
  .debug_aranges
                 0x00000000      0x140 ./source/fusion/FusionAhrs.o
  .debug_ranges  0x00000000      0x130 ./source/fusion/FusionAhrs.o
@@ -804,7 +804,7 @@ Discarded input sections
                 0x00000000       0xa6 ./source/fusion/FusionCompass.o
  .text.FusionCompassCalculateHeading
                 0x00000000      0x448 ./source/fusion/FusionCompass.o
- .debug_info    0x00000000      0x428 ./source/fusion/FusionCompass.o
+ .debug_info    0x00000000      0x42c ./source/fusion/FusionCompass.o
  .debug_abbrev  0x00000000      0x1e2 ./source/fusion/FusionCompass.o
  .debug_aranges
                 0x00000000       0x60 ./source/fusion/FusionCompass.o
