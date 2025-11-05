@@ -14,7 +14,7 @@
 #include "queue.h"
 
 extern SemaphoreHandle_t xImuDataReady; 		//	IMU -> Fusion algorithm
-extern SemaphoreHandle_t xFusionDone; 			//	Fusion -> CANOpen
+//extern SemaphoreHandle_t xFusionDone; 			//	Fusion -> CANOpen
 extern SemaphoreHandle_t xFusionOutputMutex;		//	 protects shared data
 
 /* Queue used by CAN0 ISR to push raw frames into IMU task (optional) */
