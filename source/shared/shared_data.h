@@ -24,6 +24,9 @@ typedef struct {
 typedef struct {
 	float roll, pitch, yaw;
 	TickType_t timestamp;
+	FusionQuaternion quat;
+	FusionEuler euler;
+	FusionVector earth;
 } FusionOutput_t;
 
 extern ImuSample_t gImuData[2];

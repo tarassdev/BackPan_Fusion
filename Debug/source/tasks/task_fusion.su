@@ -1,6 +1,9 @@
+C:/Users/Lenovo/Documents/MCUXpressoIDE_25.6.136/workspace/kfx_backpan_fusion/source/fusion/FusionMath.h:138:21:FusionRadiansToDegrees	16	static
+C:/Users/Lenovo/Documents/MCUXpressoIDE_25.6.136/workspace/kfx_backpan_fusion/source/fusion/FusionMath.h:150:21:FusionAsin	16	static
 C:/Users/Lenovo/Documents/MCUXpressoIDE_25.6.136/workspace/kfx_backpan_fusion/source/fusion/FusionMath.h:218:28:FusionVectorSubtract	72	static
 C:/Users/Lenovo/Documents/MCUXpressoIDE_25.6.136/workspace/kfx_backpan_fusion/source/fusion/FusionMath.h:257:28:FusionVectorHadamardProduct	72	static
 C:/Users/Lenovo/Documents/MCUXpressoIDE_25.6.136/workspace/kfx_backpan_fusion/source/fusion/FusionMath.h:420:28:FusionMatrixMultiplyVector	64	static
+C:/Users/Lenovo/Documents/MCUXpressoIDE_25.6.136/workspace/kfx_backpan_fusion/source/fusion/FusionMath.h:468:27:FusionQuaternionToEuler	72	static
 C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\source/fusion/FusionCalibration.h:26:28:FusionCalibrationInertial	136	static
 C:\Users\Lenovo\Documents\MCUXpressoIDE_25.6.136\workspace\kfx_backpan_fusion\source/fusion/FusionCalibration.h:37:28:FusionCalibrationMagnetic	104	static
 ../source/tasks/task_fusion.c:36:6:TaskFusion_Init	16	static

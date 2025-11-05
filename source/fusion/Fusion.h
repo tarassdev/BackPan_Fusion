@@ -1,6 +1,6 @@
 /**
  * @file Fusion.h
- * @author Seb Madgwick
+ * @author Serhii Filimoshyn
  * @brief Main header file for the Fusion library. This is the only file that
  * needs to be included when using the library.
  */
@@ -8,7 +8,6 @@
 #ifndef FUSION_H
 #define FUSION_H
 
-//------------------------------------------------------------------------------
 // Includes
 
 #ifdef __cplusplus

@@ -5,14 +5,12 @@
  * accelerometer and magnetometer measurements.
  */
 
-//------------------------------------------------------------------------------
 // Includes
 
 #include "FusionAxes.h"
 #include "FusionCompass.h"
 #include <math.h>
 
-//------------------------------------------------------------------------------
 // Functions
 
 /**
@@ -24,6 +22,12 @@
  */
 float FusionCompassCalculateHeading(const FusionConvention convention, const FusionVector accelerometer, const FusionVector magnetometer) {
     switch (convention) {
+    	case FusionConventionNed: {
+                const FusionVector up = FusionVectorMultiplyScalar(accelerometer, -1.0f);
+                const FusionVector west = FusionVectorNormalise(FusionVectorCrossProduct(up, magnetometer));
+                const FusionVector north = FusionVectorNormalise(FusionVectorCrossProduct(west, up));
+                return FusionRadiansToDegrees(atan2f(west.axis.x, north.axis.x));
+            }
         case FusionConventionNwu: {
             const FusionVector west = FusionVectorNormalise(FusionVectorCrossProduct(accelerometer, magnetometer));
             const FusionVector north = FusionVectorNormalise(FusionVectorCrossProduct(west, accelerometer));
@@ -35,14 +39,8 @@ float FusionCompassCalculateHeading(const FusionConvention convention, const Fus
             const FusionVector east = FusionVectorMultiplyScalar(west, -1.0f);
             return FusionRadiansToDegrees(atan2f(north.axis.x, east.axis.x));
         }
-        case FusionConventionNed: {
-            const FusionVector up = FusionVectorMultiplyScalar(accelerometer, -1.0f);
-            const FusionVector west = FusionVectorNormalise(FusionVectorCrossProduct(up, magnetometer));
-            const FusionVector north = FusionVectorNormalise(FusionVectorCrossProduct(west, up));
-            return FusionRadiansToDegrees(atan2f(west.axis.x, north.axis.x));
-        }
     }
-    return 0; // avoid compiler warning
+    return 0;
 }
 
 //------------------------------------------------------------------------------

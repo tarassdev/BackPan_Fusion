@@ -6,4 +6,4 @@
 ../source/fusion/FusionMath.h:272:28:FusionVectorCrossProduct	72	static
 ../source/fusion/FusionMath.h:300:21:FusionVectorMagnitudeSquared	40	static
 ../source/fusion/FusionMath.h:318:28:FusionVectorNormalise	56	static
-../source/fusion/FusionCompass.c:25:7:FusionCompassCalculateHeading	208	static
+../source/fusion/FusionCompass.c:23:7:FusionCompassCalculateHeading	208	static

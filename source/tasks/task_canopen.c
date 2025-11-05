@@ -8,6 +8,13 @@
 #include "task_canopen.h"
 #include "shared/shared_data.h"
 #include "shared/semaphores.h"
+#include <string.h>
+
+typedef struct {
+	uint32_t id;
+	uint8_t data[8];
+	uint32_t len;
+} CAN_Tx_t;
 
 void TaskCANopen_Init(void) {
     xTaskCreate(TaskCANopen, "CANopen_Task", 512, NULL, 4, NULL);
@@ -17,22 +24,17 @@ void TaskCANopen_Init(void) {
  * @brief Sends Fusion results immediately when ready.
  */
 void TaskCANopen(void *pvParameters) {
-//    for (;;) {
-//        if (xSemaphoreTake(xSemFusionResultReady, portMAX_DELAY) == pdTRUE) {
-//            xSemaphoreTake(xMutexFusionData, portMAX_DELAY);
-//            FusionOutput_t data = g_fusionOutput;
-//            xSemaphoreGive(xMutexFusionData);
-//
-//            CAN_Message_t tx = {0};
-//            tx.id = 0x180; // Example PDO ID
-//            memcpy(tx.data, &data.euler, sizeof(data.euler));
-//            tx.len = 8;
-//
+    for (;;) {
+        if (xSemaphoreTake(xFusionOutputMutex, portMAX_DELAY) == pdTRUE) {
+            FusionOutput_t CANOutputData = gFusionOutput;
+            xSemaphoreGive(xFusionOutputMutex);
+
+            CAN_Tx_t tx = {0};
+            tx.id = 0x180; // Example PDO ID
+            memcpy(tx.data, &CANOutputData.euler, sizeof(CANOutputData.euler));
+            tx.len = 8;
+
 //            FLEXCAN1_SendFrame(&tx);
-//        }
-//    }
-	for (;;) {
-
-	}
-
+        }
+    }
 }

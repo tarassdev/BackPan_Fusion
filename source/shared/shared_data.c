@@ -11,4 +11,4 @@ ImuSample_t gImuData[2];
 volatile uint8_t gImuWriteIndex = 0;
 volatile uint8_t gImuReadIndex  = 1;
 
-FusionOutput_t gFusionData = {0};
+FusionOutput_t gFusionOutput = {0};

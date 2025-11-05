@@ -89,7 +89,7 @@ void TaskFusion(void *pvParameters) {
 			FusionVector acc = localSample.acc;
 			FusionVector mag = localSample.mag;
 
-			// Apply calibration
+			/* apply calibration */
 			gyro = FusionCalibrationInertial(gyro, gyroscopeMisalignment, gyroscopeSensitivity, gyroscopeOffset);
 			acc	 = FusionCalibrationInertial(acc, accelerometerMisalignment, accelerometerSensitivity, accelerometerOffset);
 			mag	 = FusionCalibrationMagnetic(mag, softIronMatrix, hardIronOffset);
@@ -108,15 +108,17 @@ void TaskFusion(void *pvParameters) {
 			/* store result protected by mutex */
 			if (xFusionOutputMutex != NULL) {
 				if (xSemaphoreTake(xFusionOutputMutex, pdMS_TO_TICKS(2)) == pdTRUE) {
-					//	                	gFusionOutput.timestamp_us = localSample.timestamp_us;
-					//					gFusionOutput.quat = FusionAhrsGetQuaternion(&ahrs);
-					//					gFusionOutput.euler = FusionQuaternionToEuler(gFusionOutput.quat);
+					//	gFusionOutput.timestamp_us = localSample.timestamp_us;
+					gFusionOutput.quat = FusionAhrsGetQuaternion(&ahrs);
+					gFusionOutput.euler = FusionQuaternionToEuler(gFusionOutput.quat);
+					gFusionOutput.earth = FusionAhrsGetEarthAcceleration(&ahrs);
 					xSemaphoreGive(xFusionOutputMutex);
 				}
 			} else {
 				//	            	gFusionOutput.timestamp_us = localSample.timestamp_us;
-				//				gFusionOutput.quat = FusionAhrsGetQuaternion(&ahrs);
-				//				gFusionOutput.euler = FusionQuaternionToEuler(gFusionOutput.quat);
+				gFusionOutput.quat = FusionAhrsGetQuaternion(&ahrs);
+				gFusionOutput.euler = FusionQuaternionToEuler(gFusionOutput.quat);
+				gFusionOutput.earth = FusionAhrsGetEarthAcceleration(&ahrs);
 			}
 			/* optionally signal CANopen task by semaphore (not shown) */
 		} else {
